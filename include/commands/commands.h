@@ -1,0 +1,16 @@
+#pragma once
+#include <string>
+#include "global.h"
+#include "commands/command_error.h"
+#include "commands/command.h"
+#include "commands/commands_prog_create.h"
+#include "commands/CommandProgStop.h"
+#include "commands/CommandSetParam.h"
+#include "commands/CommandDescriptor.h"
+#include "commands/CommandWifiProvisioning.h"
+#include "commands/CommandPairing.h"
+#include "commands/CommandWifiForget.h"
+#include "commands/CommandConnectionWipe.h"
+#include "commands/CommandUpdateFirmware.h"
+#include "commands/CommandCalibration.h"
+#include "commands/CommandHello.h"

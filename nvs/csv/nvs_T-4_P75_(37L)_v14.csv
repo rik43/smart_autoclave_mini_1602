@@ -1,0 +1,6 @@
+key,type,encoding,value
+settings,namespace,,
+hwVersion,data,u32,14
+scrBright,data,u16,100
+h1_max_pow,data,i32,75
+t1_clbr_fct,data,i32,-40
