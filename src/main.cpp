@@ -5,7 +5,7 @@
 #include "net/connector.h"
 #include "time/TimerTimeout.h"
 #include "settings/SettingsStore.h"
-#include "display/Display.h"
+// #include "display/Display.h"
 #include "utils/LEDManager.h"
 
 
@@ -15,8 +15,8 @@ TimerTimeout timer;
 
 SettingsStore settings;
 
-DwinDisplay dwinDisplay(Serial2);
-Display display(dwinDisplay, settings);
+// DwinDisplay dwinDisplay(Serial2);
+// Display display(dwinDisplay, settings);
 
 App app(settings);
 
@@ -48,11 +48,11 @@ void setup() {
 
   setupTick();
 
-  display.setup();  //delay(1000); // wait for reset display
+  // display.setup();  //delay(1000); // wait for reset display
 
   setupTick();
 
-  connector.setDisplay(&display);
+  // connector.setDisplay(&display);
   connector.start();
   
   setupTick();
@@ -65,7 +65,7 @@ void setup() {
 
   setupTick();
 
-  display.start();
+  // display.start();
 
   setupTick();
 
@@ -91,7 +91,7 @@ void setup() {
 
 void loop() {
 
-  display.loop();
+  // display.loop();
 
   connector.loop();
 

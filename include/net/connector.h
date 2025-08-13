@@ -8,7 +8,7 @@
 
 class Command;
 class Event;
-class Display;
+//class Display;
 class SettingsStore;
 
 class Connector {
@@ -18,7 +18,7 @@ private:
   ServerManager serverManager;
   BluetoothConnection btConnection;
 
-  Display* display = nullptr;
+  //Display* display = nullptr;
 
   SettingsStore& settings;
 
@@ -41,7 +41,7 @@ private:
 
 public:
   Connector(SettingsStore& settings);
-  void setDisplay(Display* display);
+  //void setDisplay(Display* display);
   void start();
   void startBle();
   void loop();

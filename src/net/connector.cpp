@@ -7,7 +7,8 @@
 #include "events/EventDescriptor.h"
 #include "events/EventWifiCheckResult.h"
 #include "commands/command.h"
-#include "display/Display.h"
+#include "commands/commands_prog_create.h"
+// #include "display/Display.h"
 #include "settings/SettingsStore.h"
 
 
@@ -23,9 +24,9 @@ static struct CheckCredentials {
 
 Connector::Connector(SettingsStore& settings) : settings(settings) {}
 
-void Connector::setDisplay(Display* _display) {
-  display = _display;
-}
+// void Connector::setDisplay(Display* _display) {
+//   display = _display;
+// }
 
 // прочитать настройки и если возможно соединиться
 void Connector::start() {
@@ -355,9 +356,9 @@ void Connector::sendToServer(const char* msg) {
 }
 
 void Connector::sentToDisplay(Event& event) {
-  if (display != nullptr) {
-    display->dispatchEvent(event);
-  }
+  // if (display != nullptr) {
+  //   display->dispatchEvent(event);
+  // }
 }
 
 void Connector::send(const char* msg) {
