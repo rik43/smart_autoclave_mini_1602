@@ -4,6 +4,7 @@
 #include "commands/command.h"
 #include "net/connector.h"
 #include "commands/command_factory.h"
+#include "ui/AppController.h"
 
 extern Connector connector;
 
@@ -43,4 +44,15 @@ void dispatch(const char* message) {
   if (cmd != nullptr) {
     delete cmd;
   }
+}
+
+extern AppController appController;
+void lcdDraw() {
+  appController.draw();
+}
+void startAutoclaveProcess() {
+  appController.startAutoclaveProcess();
+}
+void stopAutoclaveProcess() {
+  appController.stopAutoclaveProcess();
 }

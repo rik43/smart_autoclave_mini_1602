@@ -23,3 +23,7 @@ void dispatch(const char* message);
 
 // отправка внутренней команды (например с дисплея)
 void dispatch(Command* cmd); // @deprecated
+
+void lcdDraw();
+void startAutoclaveProcess();
+void stopAutoclaveProcess();

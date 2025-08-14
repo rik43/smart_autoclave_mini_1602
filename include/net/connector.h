@@ -8,7 +8,7 @@
 
 class Command;
 class Event;
-//class Display;
+class AppController;
 class SettingsStore;
 
 class Connector {
@@ -19,6 +19,8 @@ private:
   BluetoothConnection btConnection;
 
   //Display* display = nullptr;
+
+  AppController& appController;
 
   SettingsStore& settings;
 
@@ -40,7 +42,7 @@ private:
   unsigned long startWifiCheckingTime; // время начала проверки wifi доступа (таймаут 30сек)
 
 public:
-  Connector(SettingsStore& settings);
+  Connector(SettingsStore& settings, AppController& appController);
   //void setDisplay(Display* display);
   void start();
   void startBle();

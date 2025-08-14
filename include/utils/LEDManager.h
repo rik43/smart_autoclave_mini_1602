@@ -5,6 +5,7 @@
 #define LED_MODE_ON     1
 #define LED_MODE_BLINK  2
 #define LED_MODE_PULSE  3
+#define LED_MODE_FREE   4
 
 #define MANAGER_MODE_NORMAL  0
 #define MANAGER_MODE_BITS    1
@@ -57,6 +58,19 @@ public:
         ledOff();
     }
 
+    // value: 0 - 255
+    void setValue(uint8_t value) {
+        mode = LED_MODE_FREE;
+        state = true;
+        set(value);
+    }
+
+    // value: 0.0 - 1.0
+    void setValue(float value) {
+        mode = LED_MODE_FREE;
+        setValue(value * 255);
+    }
+
     void blink(uint32_t timeMs = 0, uint32_t pOn = 500, uint32_t pOff = 500) {
         mode = LED_MODE_BLINK;
         startTime = millis();
@@ -73,6 +87,10 @@ public:
     }
 
     void update() {
+        if (mode == LED_MODE_FREE) {
+            return;
+        }
+
         unsigned long currentTime = millis();
         unsigned long elapsedTime = currentTime - startTime;
 
@@ -119,20 +137,20 @@ private:
     uint16_t tickInterval = 200;
 
 public:
-    LM_LED leds[4] = {LM_LED(LED_1_PIN), LM_LED(LED_2_PIN), LM_LED(LED_3_PIN), LM_LED(LED_4_PIN)};
+    LM_LED leds[LED_COUNT] = {LM_LED(LED_1_PIN), LM_LED(LED_2_PIN)};
 
     LEDManager() {}
 
     void loop() {
         if (currentMode == MANAGER_MODE_NORMAL) {
-            for (int i = 0; i < 4; i++) {
+            for (int i = 0; i < LED_COUNT; i++) {
                 leds[i].update();
             }
         } else if (currentMode == MANAGER_MODE_TICK) {
             unsigned long currentTime = millis();
             if (currentTime - tickStartTime >= tickInterval) {  // Example delay for tick effect
                 ledOff(tickIndex);
-                tickIndex = (tickIndex + 1) % 4;
+                tickIndex = (tickIndex + 1) % LED_COUNT;
                 ledOn(tickIndex);
                 tickStartTime = currentTime;
             }
@@ -140,7 +158,7 @@ public:
             unsigned long currentTime = millis();
             if (currentTime - tickStartTime > 30) {
                 tickStartTime = currentTime;
-                for (int i = 0; i < 4; i++) {
+                for (int i = 0; i < LED_COUNT; i++) {
                     float phaseShift = i * 0.2f;  // Phase shift for each LED
                     int brightness = (sin(2.0 * PI * (currentTime / (float)tickInterval + phaseShift)) + 1.0) * 50; // 127.5; //
                     ledSet(i, brightness);
@@ -152,7 +170,7 @@ public:
 
     void bits(uint8_t bitsValue) {
         currentMode = MANAGER_MODE_BITS;
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < LED_COUNT; i++) {
             if (bitsValue & (1 << i)) {
                 ledOn(i);
             } else {
@@ -175,11 +193,11 @@ public:
     }
 
     void pulseIdle() {
-        pulse(2400);
+        pulse(600 * LED_COUNT);
     }
 
     void pulseActive() {
-        pulse(800);
+        pulse(200 * LED_COUNT);
     }
 
     void normalMode() {

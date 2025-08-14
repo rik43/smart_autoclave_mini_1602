@@ -8,7 +8,7 @@
 #include "events/EventWifiCheckResult.h"
 #include "commands/command.h"
 #include "commands/commands_prog_create.h"
-// #include "display/Display.h"
+#include "ui/AppController.h"
 #include "settings/SettingsStore.h"
 
 
@@ -22,7 +22,7 @@ static struct CheckCredentials {
 } checkCredentials;
 
 
-Connector::Connector(SettingsStore& settings) : settings(settings) {}
+Connector::Connector(SettingsStore& settings, AppController& appController) : settings(settings), appController(appController) {}
 
 // void Connector::setDisplay(Display* _display) {
 //   display = _display;
@@ -359,6 +359,7 @@ void Connector::sentToDisplay(Event& event) {
   // if (display != nullptr) {
   //   display->dispatchEvent(event);
   // }
+  appController.dispatchEvent(event);
 }
 
 void Connector::send(const char* msg) {

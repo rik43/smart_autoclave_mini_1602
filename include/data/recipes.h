@@ -9,6 +9,7 @@ struct Recipe {
     uint16_t cookingTemperature;
     uint16_t cookingTimeMinutes;
     std::string name;
+    std::string nameB64;
 };
 
 extern const Recipe recipes[];

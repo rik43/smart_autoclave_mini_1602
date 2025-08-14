@@ -7,6 +7,7 @@
 #include "settings/SettingsStore.h"
 // #include "display/Display.h"
 #include "utils/LEDManager.h"
+#include "ui/AppController.h"
 
 
 LEDManager ledManager;
@@ -18,9 +19,20 @@ SettingsStore settings;
 // DwinDisplay dwinDisplay(Serial2);
 // Display display(dwinDisplay, settings);
 
+AppController appController(ledManager);
+
 App app(settings);
 
-Connector connector(settings);
+Connector connector(settings, appController);
+
+
+IRAM_ATTR void enc_isr() {
+  appController.enc.tickISR();
+}
+IRAM_ATTR void enc_btn_isr() {
+  appController.enc.pressISR();
+}
+
 
 void printVersion();
 
@@ -49,6 +61,7 @@ void setup() {
   setupTick();
 
   // display.setup();  //delay(1000); // wait for reset display
+  appController.begin();
 
   setupTick();
 
@@ -77,6 +90,12 @@ void setup() {
 
   setupTick();
 
+  appController.enc.setEncISR(true);
+  attachInterrupt(digitalPinToInterrupt(ENCODER_S1), enc_isr, CHANGE);
+  attachInterrupt(digitalPinToInterrupt(ENCODER_S2), enc_isr, CHANGE);
+  attachInterrupt(digitalPinToInterrupt(ENCODER_KEY), enc_btn_isr, FALLING);
+
+
   //DwinFirmwareUpdate updater(Serial2, 13, "http://192.168.1.35:3535/dwin/13TouchFile.bin");
   //DwinFirmwareUpdate updater(Serial2, 13, "https://smart-cloud-dev.zagk.ru/fw/av-a1/scr/0/13TouchFile.bin");
   //updater.updateBlock();
@@ -86,10 +105,15 @@ void setup() {
   //ledManager.leds[1].pulse(0, 1000);
   //ledManager.leds[2].blink(0, 500, 500);
   //ledManager.leds[3].blink(0, 250, 250);
-  ledManager.pulseIdle();
+  // ledManager.pulseIdle();
+  ledManager.normalMode();
+  ledManager.leds[0].pulse(1000);
+  ledManager.leds[1].ledOff();
 }
 
 void loop() {
+
+  appController.loop();
 
   // display.loop();
 
@@ -99,7 +123,7 @@ void loop() {
 
   timer.loop();
 
-  ledManager.loop();
+  //ledManager.loop();
 
   vTaskDelay(pdMS_TO_TICKS(1)); // delay 1ms for other tasks
 }

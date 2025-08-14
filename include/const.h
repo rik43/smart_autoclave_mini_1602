@@ -28,10 +28,10 @@
 
 // LEDs  + is ON / - is OFF
 // Resistors 150 Ohm
+#define LED_COUNT    2
+
 #define LED_1_PIN    18
-#define LED_2_PIN    19
-#define LED_3_PIN    33
-#define LED_4_PIN    25
+#define LED_2_PIN    25
 
 #define HOT_WARNING_TEMPERATURE             80.0f // град, темп-ра предупреждения о горячем и необходимости опускания клапана
 
@@ -39,3 +39,14 @@
 
 // коды отображения сообщений на дисплее
 #define DISPLAY_COMPLETE 1 // complete screen
+
+
+#define _LCD_TYPE               1      // 1 - по шине I2C, 2 - десятиконтактное (для LCD_1602_RUS_ALL)
+#define LCD_ADDRESS             0x27
+#define LCD_WIDTH               16
+#define LCD_HEIGHT              2
+
+#define ENCODER_S1              4
+#define ENCODER_S2              19
+#define ENCODER_KEY             23
+
