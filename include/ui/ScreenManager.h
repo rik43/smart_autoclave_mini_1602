@@ -7,6 +7,10 @@
 #include "screens/RecipesScreen.h"
 #include "screens/RecipePreviewScreen.h"
 #include "screens/RecipeConfirmScreen.h"
+#include "screens/CustomRecipeScreen.h"
+#include "screens/CompleteScreen.h"
+#include "screens/StoppedScreen.h"
+#include "screens/ErrorScreen.h"
 #include "screens/AutoclaveProcessScreen.h"
 #include "screens/UpdateFirmwareScreen.h"
 #include "screens/StopProcessConfirmScreen.h"
@@ -27,6 +31,10 @@ class ScreenManager {
         RecipesScreen recipesScreen;
         RecipePreviewScreen recipePreviewScreen;
         RecipeConfirmScreen recipeConfirmScreen;
+        CustomRecipeScreen customRecipeScreen;
+        CompleteScreen completeScreen;
+        StoppedScreen stoppedScreen;
+        ErrorScreen errorScreen;
 		AutoclaveProcessScreen autoclaveProcessScreen;
         StopProcessConfirmScreen stopProcessConfirmScreen;
         TestScreen testScreen;
@@ -40,6 +48,10 @@ class ScreenManager {
             recipesScreen(),
             recipePreviewScreen(),
             recipeConfirmScreen(),
+            customRecipeScreen(),
+            completeScreen(),
+            stoppedScreen(),
+            errorScreen(),
 			autoclaveProcessScreen(),
             stopProcessConfirmScreen(),
             testScreen(),

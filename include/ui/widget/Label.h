@@ -294,6 +294,8 @@ class Label {
                     if (startChar < 0) startChar = 0;
                     outputText = utf8Substr(text, startChar, width);
                 }
+            } else {
+                return "";
             }
 
             // всегда дополнять пробелами до ширины с нужной стороны
@@ -316,8 +318,10 @@ class Label {
 
         void print(BufferedLcd &lcd) {
             std::string out = normalizeForLCD(getOutputText());
-            lcd.setCursor(static_cast<uint8_t>(x), static_cast<uint8_t>(y));
-            lcd.print(out.c_str());
+            if (out != "") {
+                lcd.setCursor(static_cast<uint8_t>(x), static_cast<uint8_t>(y));
+                lcd.print(out.c_str());
+            }
         }
 
 

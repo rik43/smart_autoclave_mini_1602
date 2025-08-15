@@ -3,10 +3,14 @@
 #include "Screen.h"
 #include "ui/widget/Label.h"
 
+#define STEP_TYPE_HEATING   1
+#define STEP_TYPE_COOLING   2
+#define STEP_TYPE_HOLD      3
+
 
 class AutoclaveProcessScreen : public Screen {
 	private:
-		Label labelStatus;
+		Label labelStepType;
 		Label labelTemperature;
 		Label labelTemperatureUnit;
 		Label labelTime;
@@ -14,17 +18,19 @@ class AutoclaveProcessScreen : public Screen {
 		Label labelStopButton;
 
         Timer timerNotification;
-        bool isNotificationShown = false;
+        bool isNotificationShown = true;
+
+        int prevStepType = 0;
 
 	public:
 		AutoclaveProcessScreen() :
             timerNotification(5000),
-			labelStatus(0, 0, "Нагрев"),
+			labelStepType(0, 0, "Нагрев"),
 			labelTemperature(0, 1, "", 3),
 			labelTemperatureUnit(3, 1, "°C", 2),
 			labelTime(8, 1, "", 3),
 			labelTimeUnit(11, 1, "мин", 3),
-			labelStopButton(8, 0, "Чтобы остановить процесс, нажмите кнопку")
+			labelStopButton(8, 0, "Чтобы остановить процесс нажмите кнопку")
 		{
             labelTemperature.setAlignment(ALIGN_RIGHT);
             labelTime.setAlignment(ALIGN_RIGHT);
@@ -38,7 +44,9 @@ class AutoclaveProcessScreen : public Screen {
 		}
 
 		void reset() override {
-			labelStatus.setText("Нагрев");
+			labelStepType.setText("Нагрев");
+            isNotificationShown = true;
+            labelStopButton.setVisible(true);
 		}
 
 		void update1s() override {
@@ -49,10 +57,25 @@ class AutoclaveProcessScreen : public Screen {
                 isNotificationShown = false;
                 labelStopButton.setVisible(false);
             }
+
+            if (viewContext->getStepType() != prevStepType) {
+                prevStepType = viewContext->getStepType();
+                switch (viewContext->getStepType()) {
+                    case STEP_TYPE_HEATING:
+                        labelStepType.setText("Нагрев");
+                        break;
+                    case STEP_TYPE_COOLING:
+                        labelStepType.setText("Остывание");
+                        break;
+                    case STEP_TYPE_HOLD:
+                        labelStepType.setText("Готовка");
+                        break;
+                }
+            }
 		}
 
 		void draw(BufferedLcd &lcd) override {
-			labelStatus.print(lcd);
+			labelStepType.print(lcd);
 			labelTemperature.print(lcd);
 			labelTemperatureUnit.print(lcd);
 			labelTime.print(lcd);
@@ -61,7 +84,7 @@ class AutoclaveProcessScreen : public Screen {
 		}
 
 		void setStatus(const char* status) {
-			labelStatus.setText(status);
+			labelStepType.setText(status);
 		}
 
         void onEncoderTurn2(bool isRight, bool isFast) override {

@@ -56,7 +56,7 @@ class StopProcessConfirmScreen : public Screen {
         void onEncoderButtonClick() override {
             if (isYesSelected) {
                 stopAutoclaveProcess();
-                gotoHomeScreen();
+                //gotoHomeScreen();
             } else {
                 gotoAutoclaveProcessScreen(); // вернуться к процессу
             }

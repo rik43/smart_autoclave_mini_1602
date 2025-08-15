@@ -20,7 +20,7 @@ class ViewContext {
         std::string recipeNameB64 = ""; // название рецепта в base64
         int customTemperature = 0; // температура в градусах Цельсия рецепта
         int customTimeMin = 0; // время в минутах рецепта
-        int recipeMode = RECIPE_MODE_AUTOCLAVE; // режим автоклав/су-вид
+        byte recipeMode = RECIPE_MODE_AUTOCLAVE; // режим автоклав/су-вид
 
         // Статус соединения
         bool hasBluetooth = false;
@@ -54,7 +54,7 @@ class ViewContext {
             customTimeMin = time;
             recipeMode = isAutoclave ? RECIPE_MODE_AUTOCLAVE : RECIPE_MODE_SU_VID;
             recipeId = 0;
-            recipeName = "Свой рецепт";
+            recipeName = "Свой";
             recipeNameB64 = "0KHQstC+0Lkg0YDQtdGG0LXQv9GC";
         }
 

@@ -66,6 +66,10 @@ class Screen {
         void gotoRecipesScreen(bool reset = true);
         void gotoRecipePreviewScreen();
         void gotoRecipeConfirmScreen();
+        void gotoCustomRecipeScreen();
+        void gotoCompleteScreen();
+        void gotoStoppedScreen();
+        void gotoErrorScreen(int errorCode = 1);
 		void gotoAutoclaveProcessScreen();
         void gotoStopProcessConfirmScreen();
         void gotoTestScreen();

@@ -177,11 +177,21 @@ class AppController {
                 //stopTimeInfo(eventProg.stoppedStep, std::round(eventProg.stoppedSecond / 60));
                 //showEndProgramPage(true, eventProg.errorCode);
                 programStarter.setStopped();
+                
+                // Переходим на экран ошибки или остановки в зависимости от наличия ошибки
+                if (eventProg.errorCode != 0) {
+                    screenManager.currentScreen->gotoErrorScreen(eventProg.errorCode);
+                } else {
+                    screenManager.currentScreen->gotoStoppedScreen();
+                }
             }
             else if (event.name == "prog.completed") { // успешное завершение программы
                 //EventProgCompleted& eventProg = static_cast<EventProgCompleted&>(event);
                 //showEndProgramPage(false);
                 programStarter.setCompleted();
+                
+                // Переходим на экран успешного завершения
+                screenManager.currentScreen->gotoCompleteScreen();
             }
             //else if (event.name == "prog.info") { // успешное завершение программы
             //    EventProgInfo& event = static_cast<EventProgInfo&>(event);
